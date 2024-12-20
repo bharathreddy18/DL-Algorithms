@@ -71,12 +71,30 @@ class ANN_Binary:
             print(f'Error Type: {er_type} \n Error Message: {er_msg} \n Error Traceback: {er_line.tb_lineno}')
 
 
+    def testing(self):
+        try:
+            self.c = []
+            self.columns = self.X_train.columns
+            for i in self.columns:
+                self.c.append(self.X_train[i].mean())
+            self.c = np.array(self.c)
+            self.c = self.c.reshape(1, -1)
+            if self.model.predict([self.c])[0][0] <= 0.5:
+                print('Malignant Cancer')
+            else:
+                print('Benign Cancer')
+        except Exception as e:
+            er_type, er_msg, er_line = sys.exc_info()
+            print(f'Error Type: {er_type} \n Error Message: {er_msg} \n Error Traceback: {er_line.tb_lineno}')
+
+
 if __name__ == '__main__':
     try:
         ann = ANN_Binary()
         ann.architecture()
         ann.metrics()
         ann.visualization()
+        ann.testing()
     except Exception as e:
         er_type, er_msg, er_line = sys.exc_info()
         print(f'Error Type: {er_type} \n Error Message: {er_msg} \n Error Traceback: {er_line.tb_lineno}')
