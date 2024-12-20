@@ -56,10 +56,12 @@ class ANN_Binary:
         try:
             plt.figure(figsize=(9,5))
             plt.subplot(1,2,1)
+            plt.xlabel('Epochs')
             plt.plot(np.arange(1,51), self.model.history.history['accuracy'], color = 'red', label = 'Train Accuracy')
             plt.plot(np.arange(1,51), self.model.history.history['loss'], color='blue', label = 'Train Loss')
             plt.legend()
             plt.subplot(1,2,2)
+            plt.xlabel('Epochs')
             plt.plot(np.arange(1, 51), self.model.history.history['val_accuracy'], color='red', label='Val Accuracy')
             plt.plot(np.arange(1, 51), self.model.history.history['val_loss'], color='blue', label='Val Loss')
             plt.legend()
