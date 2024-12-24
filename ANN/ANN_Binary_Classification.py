@@ -11,6 +11,7 @@ from tensorflow.keras.activations import relu, sigmoid
 import warnings
 warnings.filterwarnings('ignore')
 import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report, confusion_matrix
 
 
 
@@ -73,16 +74,16 @@ class ANN_Binary:
 
     def testing(self):
         try:
-            self.c = []
-            self.columns = self.X_train.columns
-            for i in self.columns:
-                self.c.append(self.X_train[i].mean())
-            self.c = np.array(self.c)
-            self.c = self.c.reshape(1, -1)
-            if self.model.predict([self.c])[0][0] <= 0.5:
-                print('Malignant Cancer')
-            else:
-                print('Benign Cancer')
+            self.predictions = self.model.predict(self.X_test)
+            self.class_labels = (self.predictions>0.5).astype(int).flatten()
+            for i, label in enumerate(self.class_labels):
+                if label == 0:
+                    print(f'Test Sample {i+1}: Malignant Cancer')
+                else:
+                    print(f'Test Sample {i+1}: Benign Cancer')
+            print(f'Classification report: \n \n{classification_report(self.y_test, self.class_labels)}')
+            print('----------------------------------------------------------------------------')
+            print(f'Confusion matrix: \n \n{confusion_matrix(self.y_test, self.class_labels)}')
         except Exception as e:
             er_type, er_msg, er_line = sys.exc_info()
             print(f'Error Type: {er_type} \n Error Message: {er_msg} \n Error Traceback: {er_line.tb_lineno}')
