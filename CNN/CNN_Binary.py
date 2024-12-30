@@ -85,7 +85,7 @@ class CNN:
 
             self.model.fit(self.train_generator,
                            validation_data = self.test_generator,
-                           epochs=10)
+                           epochs=20)
         except Exception as e:
             er_type, er_msg, er_line = sys.exc_info()
             print(f'Error Type: {er_type} \n Error Msg: {er_msg} \n Error Line: {er_line.tb_lineno}')
